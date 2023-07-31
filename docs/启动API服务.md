@@ -35,3 +35,16 @@ python api --port 7862 --ssl_keyfile api.example.com+4-key.pem --ssl_certfile ap
 ````
 
 此外可以通过前置Nginx转发实现类似效果，可另行查阅相关资料。
+
+## 多卡启动ChatGLM-6B和ChatGLM2-6B步骤
+### 修改.env.template或则pilot/configs/config.py文件NUM_GPUS数量(数量为启动所需要实际的显卡数量)
+### 同时需要在启动命令前指定所需要的显卡id（注意所指定显卡个数与NUM_GPUS数量保持一致），如下所示：
+````shell
+# 指定1块显卡
+NUM_GPUS = 1
+CUDA_VISIBLE_DEVICES=0 python3 pilot/server/dbgpt_server.py
+
+# 指定4块显卡
+NUM_GPUS = 4
+CUDA_VISIBLE_DEVICES=3,4,5,6 python3 pilot/server/dbgpt_server.py
+````
